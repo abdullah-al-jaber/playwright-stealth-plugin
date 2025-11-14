@@ -1,2 +1,2 @@
 # playwright-stealth-plugin
-Playwright Plugin for Anti-Bot Detection
+Playwright Plugin for Anti-Bot Stealth
