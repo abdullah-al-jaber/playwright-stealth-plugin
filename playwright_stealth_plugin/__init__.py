@@ -1,3 +1,5 @@
+import playwright.async_api
+
 import evasions.chrome_csi
 import evasions.chrome_app
 import evasions.chrome_load_times
@@ -17,11 +19,5 @@ import evasions.web_gl_vendor
 import evasions.window_outer_dimension
 
 
-import playwright.sync_api
-import playwright.async_api
-
-def sync_apply(playwright: playwright.sync_api.Playwright):
-    print(playwright)
-
-async def async_apply(playwright: playwright.async_api.Playwright):
+async def apply(playwright: playwright.async_api.Playwright):
     print(playwright)
