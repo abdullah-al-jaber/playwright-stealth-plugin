@@ -1,7 +1,8 @@
-import logging
-logger = logging.getLogger("playwright_stealth_plugin")
+## --| TEMPLATE CODE | -- ##
+# import playwright.async_api
+# import _utils
 
-# --| TEMPLATE CODE | -- #
 # async def run(playwright: playwright.async_api.Playwright):
 #     # write code here
-#     logger.info(f"RUN: {__name__}")
+#     _utils.logger.info(f"RUN: {__name__}")
+## --| TEMPLATE CODE | -- ##
