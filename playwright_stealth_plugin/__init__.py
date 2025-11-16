@@ -26,4 +26,3 @@ async def apply(playwright: playwright.async_api.Playwright | None):
     for name, module in sys.modules.items():
         if re.match(r"(evasions)\.(python)\.(.+)", name):
             await module.run(playwright)
-    
