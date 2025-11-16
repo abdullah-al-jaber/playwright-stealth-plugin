@@ -1,3 +1,4 @@
 # Python Build Folders
 /dist/
 /*.egg-info/
+/puppeteer-extra-plugin-stealth/
