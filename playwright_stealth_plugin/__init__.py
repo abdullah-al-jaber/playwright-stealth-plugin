@@ -1,5 +1,6 @@
 import re
 import sys
+import typing
 
 import playwright.async_api
 import evasions.python._utils
@@ -22,7 +23,41 @@ import evasions.python.web_gl_vendor
 import evasions.python.window_outer_dimension
 
 
-async def apply(playwright: playwright.async_api.Playwright | None):
+async def plugin_code(context: playwright.async_api.BrowserContext):
+    pass
+
+
+async def custom_launch(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.Browser:
+    browser: playwright.async_api.Browser = await original_launch(self, *args, **kwargs)
+    global original_new_context
+    original_new_context = type(browser).new_context
+    type(browser).new_context = custom_new_context
+    return browser
+
+
+async def custom_new_context(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.BrowserContext:
+    context: playwright.async_api.BrowserContext = await original_new_context(self, *args, **kwargs)
+    await plugin_code(context)
+    return context
+
+
+async def custom_launch_persistent_context(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.BrowserContext:
+    context: playwright.async_api.BrowserContext = await original_launch_persistent_context(self, *args, **kwargs)
+    await plugin_code(context)
+    return context
+
+
+async def apply(playwright: playwright.async_api.Playwright):
     for name, module in sys.modules.items():
         if re.match(r"(evasions)\.(python)\.(.+)", name):
             await module.run(playwright)
+
+    global original_launch, original_launch_persistent_context
+    original_launch = type(playwright.chromium).launch
+    original_launch_persistent_context = type(playwright.chromium).launch_persistent_context
+
+    type(playwright.chromium).launch = custom_launch
+    type(playwright.chromium).launch_persistent_context = custom_launch_persistent_context
+
+
+# [line-length : 150]
