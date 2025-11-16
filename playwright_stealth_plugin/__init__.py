@@ -1,5 +1,7 @@
-import playwright.async_api
+import re
+import sys
 
+import playwright.async_api
 import evasions.chrome_csi
 import evasions.chrome_app
 import evasions.chrome_load_times
@@ -19,5 +21,7 @@ import evasions.web_gl_vendor
 import evasions.window_outer_dimension
 
 
-async def apply(playwright: playwright.async_api.Playwright):
-    print(playwright)
+async def apply(playwright: playwright.async_api.Playwright | None):
+    for name, module in sys.modules.items():
+        if re.match(r"(evasions)\.(.+)", name):
+            await module.run(playwright)
