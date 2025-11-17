@@ -1,3 +1,3 @@
-Object.defineProperty(Object.getPrototypeOf(navigator), 'vendor', {
-    get: () => opts.navigator_vendor || 'Google Inc.',
-})
+Object.defineProperty(Object.getPrototypeOf(navigator), "vendor", {
+  get: () => opts.navigator_vendor || "Google Inc.",
+});

@@ -1,30 +1,27 @@
 if (!window.chrome) {
-    // Use the exact property descriptor found in headful Chrome
-    // fetch it via `Object.getOwnPropertyDescriptor(window, 'chrome')`
-    Object.defineProperty(window, 'chrome', {
-        writable: true,
-        enumerable: true,
-        configurable: false, // note!
-        value: {} // We'll extend that later
-    })
+  // Use the exact property descriptor found in headful Chrome
+  // fetch it via `Object.getOwnPropertyDescriptor(window, 'chrome')`
+  Object.defineProperty(window, "chrome", {
+    writable: true,
+    enumerable: true,
+    configurable: false, // note!
+    value: {}, // We'll extend that later
+  });
 }
 
 // app in window.chrome means we're running headful and don't need to mock anything
-if (!('app' in window.chrome)) {
-    const makeError = {
-        ErrorInInvocation: fn => {
-            const err = new TypeError(`Error in invocation of app.${fn}()`)
-            return utils.stripErrorWithAnchor(
-                err,
-                `at ${fn} (eval at <anonymous>`
-            )
-        }
-    }
+if (!("app" in window.chrome)) {
+  const makeError = {
+    ErrorInInvocation: (fn) => {
+      const err = new TypeError(`Error in invocation of app.${fn}()`);
+      return utils.stripErrorWithAnchor(err, `at ${fn} (eval at <anonymous>`);
+    },
+  };
 
-// There's a some static data in that property which doesn't seem to change,
-// we should periodically check for updates: `JSON.stringify(window.app, null, 2)`
-    const APP_STATIC_DATA = JSON.parse(
-        `
+  // There's a some static data in that property which doesn't seem to change,
+  // we should periodically check for updates: `JSON.stringify(window.app, null, 2)`
+  const APP_STATIC_DATA = JSON.parse(
+    `
 {
   "isInstalled": false,
   "InstallState": {
@@ -38,34 +35,34 @@ if (!('app' in window.chrome)) {
     "RUNNING": "running"
   }
 }
-        `.trim()
-    )
+        `.trim(),
+  );
 
-    window.chrome.app = {
-        ...APP_STATIC_DATA,
+  window.chrome.app = {
+    ...APP_STATIC_DATA,
 
-        get isInstalled() {
-            return false
-        },
+    get isInstalled() {
+      return false;
+    },
 
-        getDetails: function getDetails() {
-            if (arguments.length) {
-                throw makeError.ErrorInInvocation(`getDetails`)
-            }
-            return null
-        },
-        getIsInstalled: function getDetails() {
-            if (arguments.length) {
-                throw makeError.ErrorInInvocation(`getIsInstalled`)
-            }
-            return false
-        },
-        runningState: function getDetails() {
-            if (arguments.length) {
-                throw makeError.ErrorInInvocation(`runningState`)
-            }
-            return 'cannot_run'
-        }
-    }
-    utils.patchToStringNested(window.chrome.app)
+    getDetails: function getDetails() {
+      if (arguments.length) {
+        throw makeError.ErrorInInvocation(`getDetails`);
+      }
+      return null;
+    },
+    getIsInstalled: function getDetails() {
+      if (arguments.length) {
+        throw makeError.ErrorInInvocation(`getIsInstalled`);
+      }
+      return false;
+    },
+    runningState: function getDetails() {
+      if (arguments.length) {
+        throw makeError.ErrorInInvocation(`runningState`);
+      }
+      return "cannot_run";
+    },
+  };
+  utils.patchToStringNested(window.chrome.app);
 }
