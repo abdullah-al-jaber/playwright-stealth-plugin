@@ -4,37 +4,37 @@ import typing
 import json
 
 import playwright.async_api
-import evasions.python._utils
-import evasions.python.chrome_csi
-import evasions.python.chrome_app
-import evasions.python.chrome_load_times
-import evasions.python.chrome_runtime
-import evasions.python.default_args
-import evasions.python.iframe_content_window
-import evasions.python.media_codecs
-import evasions.python.navigator_hardware_concurrency
-import evasions.python.navigator_languages
-import evasions.python.navigator_permissions
-import evasions.python.navigator_plugins
-import evasions.python.navigator_vendor
-import evasions.python.navigator_webdriver
-import evasions.python.source_url
-import evasions.python.user_agent_override
-import evasions.python.web_gl_vendor
-import evasions.python.window_outer_dimension
+import playwright_stealth_plugin.evasions.python._utils
+import playwright_stealth_plugin.evasions.python.chrome_app
+import playwright_stealth_plugin.evasions.python.chrome_csi
+import playwright_stealth_plugin.evasions.python.chrome_load_times
+import playwright_stealth_plugin.evasions.python.chrome_runtime
+import playwright_stealth_plugin.evasions.python.default_args
+import playwright_stealth_plugin.evasions.python.iframe_content_window
+import playwright_stealth_plugin.evasions.python.media_codecs
+import playwright_stealth_plugin.evasions.python.navigator_hardware_concurrency
+import playwright_stealth_plugin.evasions.python.navigator_languages
+import playwright_stealth_plugin.evasions.python.navigator_permissions
+import playwright_stealth_plugin.evasions.python.navigator_plugins
+import playwright_stealth_plugin.evasions.python.navigator_vendor
+import playwright_stealth_plugin.evasions.python.navigator_webdriver
+import playwright_stealth_plugin.evasions.python.source_url
+import playwright_stealth_plugin.evasions.python.user_agent_override
+import playwright_stealth_plugin.evasions.python.web_gl_vendor
+import playwright_stealth_plugin.evasions.python.window_outer_dimension
 
 
 async def plugin_code(context: playwright.async_api.BrowserContext):
-    for variable_name, variable_value in evasions.python._utils.variables.items():
+    for variable_name, variable_value in playwright_stealth_plugin.evasions.python._utils.variables.items():
         script = f"window.{variable_name} = {json.dumps(variable_value)};"
         await context.add_init_script(script)
-    for script in evasions.python._utils.scripts:
+    for script in playwright_stealth_plugin.evasions.python._utils.scripts:
         await context.add_init_script(script)
 
 
 async def custom_launch(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.Browser:
     browser: playwright.async_api.Browser = await original_launch(
-        self, *args, **evasions.python._utils.options["browser"], **kwargs
+        self, *args, **playwright_stealth_plugin.evasions.python._utils.options["browser"], **kwargs
     )
     global original_new_context
     original_new_context = type(browser).new_context
@@ -44,7 +44,7 @@ async def custom_launch(self, *args: typing.Any, **kwargs: typing.Any) -> playwr
 
 async def custom_new_context(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.BrowserContext:
     context: playwright.async_api.BrowserContext = await original_new_context(
-        self, *args, **evasions.python._utils.options["context"], **kwargs
+        self, *args, **playwright_stealth_plugin.evasions.python._utils.options["context"], **kwargs
     )
     await plugin_code(context)
     return context
@@ -52,7 +52,11 @@ async def custom_new_context(self, *args: typing.Any, **kwargs: typing.Any) -> p
 
 async def custom_launch_persistent_context(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.BrowserContext:
     context: playwright.async_api.BrowserContext = await original_launch_persistent_context(
-        self, *args, **evasions.python._utils.options["browser"], **evasions.python._utils.options["context"], **kwargs
+        self,
+        *args,
+        **playwright_stealth_plugin.evasions.python._utils.options["browser"],
+        **playwright_stealth_plugin.evasions.python._utils.options["context"],
+        **kwargs,
     )
     await plugin_code(context)
     return context
