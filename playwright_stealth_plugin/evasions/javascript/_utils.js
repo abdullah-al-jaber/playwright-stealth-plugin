@@ -576,8 +576,3 @@ utils.memoize = fn => {
     return cache.find(c => utils.arrayEquals(c.key, args)).value
   }
 }
-
-// --
-// Stuff starting below this line is NodeJS specific.
-// --
-module.exports = utils
