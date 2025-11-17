@@ -25,7 +25,7 @@ def read_script(script_path: str) -> str:
         return script_file.read()
 
 
-async def run():
+def run():
     script = read_script(f"../javascript/_utils.js")
     scripts.append(script)
     logger.info(f"RUN: {__name__}")
