@@ -30,6 +30,7 @@ async def plugin_code(context: playwright.async_api.BrowserContext):
         await context.add_init_script(script)
     for script in playwright_stealth_plugin.evasions.python._utils.scripts:
         await context.add_init_script(script)
+    print("Stealth scripts injected", playwright_stealth_plugin.evasions.python._utils.scripts, playwright_stealth_plugin.evasions.python._utils.variables)
 
 
 async def custom_launch(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.Browser:
@@ -65,7 +66,7 @@ async def custom_launch_persistent_context(self, *args: typing.Any, **kwargs: ty
 async def apply(playwright: playwright.async_api.Playwright):
     for name, module in sys.modules.items():
         if re.match(r"(evasions)\.(python)\.(.+)", name):
-            await module.run(playwright)
+            await module.run()
 
     global original_launch, original_launch_persistent_context
     original_launch = type(playwright.chromium).launch
