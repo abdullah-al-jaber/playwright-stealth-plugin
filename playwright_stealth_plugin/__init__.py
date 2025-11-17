@@ -33,7 +33,9 @@ async def plugin_code(context: playwright.async_api.BrowserContext):
 
 
 async def custom_launch(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.Browser:
-    browser: playwright.async_api.Browser = await original_launch(self, *args, **kwargs)
+    browser: playwright.async_api.Browser = await original_launch(
+        self, *args, **evasions.python._utils.options["browser"], **kwargs
+    )
     global original_new_context
     original_new_context = type(browser).new_context
     type(browser).new_context = custom_new_context
@@ -41,13 +43,17 @@ async def custom_launch(self, *args: typing.Any, **kwargs: typing.Any) -> playwr
 
 
 async def custom_new_context(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.BrowserContext:
-    context: playwright.async_api.BrowserContext = await original_new_context(self, *args, **kwargs)
+    context: playwright.async_api.BrowserContext = await original_new_context(
+        self, *args, **evasions.python._utils.options["context"], **kwargs
+    )
     await plugin_code(context)
     return context
 
 
 async def custom_launch_persistent_context(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.BrowserContext:
-    context: playwright.async_api.BrowserContext = await original_launch_persistent_context(self, *args, **kwargs)
+    context: playwright.async_api.BrowserContext = await original_launch_persistent_context(
+        self, *args, **evasions.python._utils.options["browser"], **evasions.python._utils.options["context"], **kwargs
+    )
     await plugin_code(context)
     return context
 
@@ -65,4 +71,4 @@ async def apply(playwright: playwright.async_api.Playwright):
     type(playwright.chromium).launch_persistent_context = custom_launch_persistent_context
 
 
-# [line-length : 150]
+# [line-length : 130]

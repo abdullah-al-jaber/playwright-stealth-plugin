@@ -7,7 +7,10 @@ import playwright.async_api
 logger = logging.getLogger("playwright_stealth_plugin")
 variables: typing.Dict[str, typing.Any] = {}
 scripts: typing.List[str] = []
-options_modifiers: typing.List[typing.Callable] = []
+options: typing.Dict[str, typing.Dict] = {
+    "browser": {},
+    "context": {},
+}
 
 def read_json(json_path: str) -> typing.Any:
     with open(json_path, "r") as json_file:
