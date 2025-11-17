@@ -1,9 +1,9 @@
 import re
 import sys
-import typing
 import json
+import typing
 
-
+import playwright.async_api
 import playwright_stealth_plugin.evasions.python._utils
 import playwright_stealth_plugin.evasions.python.chrome_app
 import playwright_stealth_plugin.evasions.python.chrome_csi

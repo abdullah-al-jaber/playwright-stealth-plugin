@@ -1,4 +1,5 @@
 ## test
+import playwright.async_api
 import playwright_stealth_plugin
 
 
