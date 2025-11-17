@@ -576,3 +576,11 @@ utils.memoize = fn => {
     return cache.find(c => utils.arrayEquals(c.key, args)).value
   }
 }
+
+opts = {
+  vendor: "Google Inc.",
+  runInSecureOrigins: false,
+  hardwareConcurrency: 4,
+  languages: ["en-US", "en"],
+  renderer: "Google SwiftShader"
+}

@@ -1,5 +1,5 @@
 utils.replaceGetterWithProxy(
   Object.getPrototypeOf(navigator),
   "hardwareConcurrency",
-  utils.makeHandler().getterValue(4)
+  utils.makeHandler().getterValue(opts.hardwareConcurrency)
 );

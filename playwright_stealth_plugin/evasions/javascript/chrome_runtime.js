@@ -13,7 +13,7 @@ if (!window.chrome) {
 const existsAlready = "runtime" in window.chrome;
 // `chrome.runtime` is only exposed on secure origins
 const isNotSecure = !window.location.protocol.startsWith("https");
-if (existsAlready || (isNotSecure && !false)) {
+if (existsAlready || (isNotSecure && !opt.runInSecureOrigins)) {
   return; // Nothing to do here
 }
 

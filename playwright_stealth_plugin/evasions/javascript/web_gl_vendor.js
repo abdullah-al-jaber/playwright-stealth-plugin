@@ -1,5 +1,3 @@
-let opts = {}
-
 const getParameterProxyHandler = {
   apply: function (target, ctx, args) {
     const param = (args || [])[0];
