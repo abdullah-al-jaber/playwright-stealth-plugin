@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "playwright-stealth-plugin"
-version = "0.0.6"
+version = "0.0.7"
 description = "Playwright Plugin for Anti-Bot Stealth"
 readme = "README.md"
 authors = [
@@ -15,3 +15,6 @@ requires-python = ">=3.10"
 
 [project.urls]
 "Source Code" = "https://github.com/abdullah-al-jaber/playwright-stealth-plugin"
+
+[tool.setuptools.package-data]
+"playwright_stealth_plugin" = ["**/*"]
