@@ -65,7 +65,7 @@ utils.stripProxyFromErrors = (handler = {}) => {
               .filter((line, index) => !(index === 1 && stripFirstLine))
               // Check if the line starts with one of our blacklisted strings
               .filter(
-                (line) => !blacklist.some((bl) => line.trim().startsWith(bl))
+                (line) => !blacklist.some((bl) => line.trim().startsWith(bl)),
               )
               .join("\n")
           );
@@ -75,7 +75,7 @@ utils.stripProxyFromErrors = (handler = {}) => {
           const stackArr = stack.split("\n");
           anchor = anchor || `at Object.newHandler.<computed> [as ${trap}] `; // Known first Proxy line in chromium
           const anchorIndex = stackArr.findIndex((line) =>
-            line.trim().startsWith(anchor)
+            line.trim().startsWith(anchor),
           );
           if (anchorIndex === -1) {
             return false; // 404, anchor not found
@@ -89,7 +89,7 @@ utils.stripProxyFromErrors = (handler = {}) => {
         // Special cases due to our nested toString proxies
         err.stack = err.stack.replace(
           "at Object.toString (",
-          "at Function.toString ("
+          "at Function.toString (",
         );
         if ((err.stack || "").includes("at Function.toString (")) {
           err.stack = stripWithBlacklist(err.stack, false);
@@ -115,7 +115,7 @@ utils.stripProxyFromErrors = (handler = {}) => {
 utils.stripErrorWithAnchor = (err, anchor) => {
   const stackArr = err.stack.split("\n");
   const anchorIndex = stackArr.findIndex((line) =>
-    line.trim().startsWith(anchor)
+    line.trim().startsWith(anchor),
   );
   if (anchorIndex === -1) {
     return err; // 404, anchor not found
@@ -226,7 +226,7 @@ utils.patchToString = (obj, str = "") => {
       // Check if the toString protype of the context is the same as the global prototype,
       // if not indicates that we are doing a check across different windows., e.g. the iframeWithdirect` test case
       const hasSameProto = Object.getPrototypeOf(
-        Function.prototype.toString
+        Function.prototype.toString,
       ).isPrototypeOf(ctx.toString); // eslint-disable-line no-prototype-builtins
       if (!hasSameProto) {
         // Pass the call on to the local Function.prototype.toString instead
@@ -238,7 +238,7 @@ utils.patchToString = (obj, str = "") => {
 
   const toStringProxy = new Proxy(
     Function.prototype.toString,
-    utils.stripProxyFromErrors(handler)
+    utils.stripProxyFromErrors(handler),
   );
   utils.replaceProperty(Function.prototype, "toString", {
     value: toStringProxy,
@@ -286,7 +286,7 @@ utils.redirectToString = (proxyObj, originalObj) => {
       // Check if the toString protype of the context is the same as the global prototype,
       // if not indicates that we are doing a check across different windows., e.g. the iframeWithdirect` test case
       const hasSameProto = Object.getPrototypeOf(
-        Function.prototype.toString
+        Function.prototype.toString,
       ).isPrototypeOf(ctx.toString); // eslint-disable-line no-prototype-builtins
       if (!hasSameProto) {
         // Pass the call on to the local Function.prototype.toString instead
@@ -299,7 +299,7 @@ utils.redirectToString = (proxyObj, originalObj) => {
 
   const toStringProxy = new Proxy(
     Function.prototype.toString,
-    utils.stripProxyFromErrors(handler)
+    utils.stripProxyFromErrors(handler),
   );
   utils.replaceProperty(Function.prototype, "toString", {
     value: toStringProxy,
@@ -323,7 +323,7 @@ utils.replaceWithProxy = (obj, propName, handler) => {
   const originalObj = obj[propName];
   const proxyObj = new Proxy(
     obj[propName],
-    utils.stripProxyFromErrors(handler)
+    utils.stripProxyFromErrors(handler),
   );
 
   utils.replaceProperty(obj, propName, { value: proxyObj });
@@ -514,7 +514,7 @@ utils.stringifyFns = (fnObj = { hello: () => "world" }) => {
   return (Object.fromEntries || fromEntries)(
     Object.entries(fnObj)
       .filter(([key, value]) => typeof value === "function")
-      .map(([key, value]) => [key, value.toString()]) // eslint-disable-line no-eval
+      .map(([key, value]) => [key, value.toString()]), // eslint-disable-line no-eval
   );
 };
 
@@ -534,7 +534,7 @@ utils.materializeFns = (fnStrObj = { hello: "() => 'world'" }) => {
         // arrow functions just work
         return [key, eval(value)]; // eslint-disable-line no-eval
       }
-    })
+    }),
   );
 };
 

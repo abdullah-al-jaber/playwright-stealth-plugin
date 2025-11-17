@@ -4,7 +4,7 @@ fns = {
       mimeTypesData,
       MimeTypeArray.prototype,
       MimeType.prototype,
-      "type"
+      "type",
     );
   },
   generateMagicArray: (utils, fns) =>
@@ -12,7 +12,7 @@ fns = {
       dataArray = [],
       proto = MimeTypeArray.prototype,
       itemProto = MimeType.prototype,
-      itemMainProp = "type"
+      itemMainProp = "type",
     ) {
       // Quick helper to set props with the same descriptors vanilla is using
       const defineProp = (obj, prop, value) =>
@@ -60,7 +60,7 @@ fns = {
         return new Proxy(obj, {
           ownKeys(target) {
             return Reflect.ownKeys(target).filter(
-              (k) => !blacklist.includes(k)
+              (k) => !blacklist.includes(k),
             );
           },
           getOwnPropertyDescriptor(target, prop) {
@@ -104,7 +104,7 @@ fns = {
       const functionMocks = fns.generateFunctionMocks(utils)(
         proto,
         itemMainProp,
-        magicArray
+        magicArray,
       );
 
       // We need to overlay our custom object with a JS Proxy
@@ -150,7 +150,7 @@ fns = {
       pluginsData,
       PluginArray.prototype,
       Plugin.prototype,
-      "name"
+      "name",
     );
   },
   generateFunctionMocks: (utils) => (proto, itemMainProp, dataArray) => ({
@@ -161,7 +161,7 @@ fns = {
           throw new TypeError(
             `Failed to execute 'item' on '${
               proto[Symbol.toStringTag]
-            }': 1 argument required, but only 0 present.`
+            }': 1 argument required, but only 0 present.`,
           );
         }
         // Special behavior alert:
@@ -179,7 +179,7 @@ fns = {
           throw new TypeError(
             `Failed to execute 'namedItem' on '${
               proto[Symbol.toStringTag]
-            }': 1 argument required, but only 0 present.`
+            }': 1 argument required, but only 0 present.`,
           );
         }
         return dataArray.find((mt) => mt[itemMainProp] === args[0]) || null; // Not `undefined`!

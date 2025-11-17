@@ -29,8 +29,8 @@ if (!isSecure) {
             state: "denied",
             onchange: null,
           },
-          PermissionStatus.prototype
-        )
+          PermissionStatus.prototype,
+        ),
       );
     },
   };

@@ -38,7 +38,7 @@ const STATIC_DATA = JSON.parse(
     "RUNNING": "running"
   }
 }
-        `.trim()
+        `.trim(),
 );
 
 window.chrome.app = {

@@ -34,10 +34,10 @@ const makeCustomRuntimeErrors = (preamble, method, extensionId) => ({
   NoMatchingSignature: new TypeError(preamble + `No matching signature.`),
   MustSpecifyExtensionID: new TypeError(
     preamble +
-      `${method} called from a webpage must specify an Extension ID (string) for its first argument.`
+      `${method} called from a webpage must specify an Extension ID (string) for its first argument.`,
   ),
   InvalidExtensionID: new TypeError(
-    preamble + `Invalid extension id: '${extensionId}'`
+    preamble + `Invalid extension id: '${extensionId}'`,
   ),
 });
 
@@ -56,7 +56,7 @@ const sendMessageHandler = {
     const Errors = makeCustomRuntimeErrors(
       errorPreamble,
       `chrome.runtime.sendMessage()`,
-      extensionId
+      extensionId,
     );
 
     // Check if the call signature looks ok
@@ -95,7 +95,7 @@ utils.mockWithProxy(
   window.chrome.runtime,
   "sendMessage",
   function sendMessage() {},
-  sendMessageHandler
+  sendMessageHandler,
 );
 
 /**
@@ -112,7 +112,7 @@ const connectHandler = {
     const Errors = makeCustomRuntimeErrors(
       errorPreamble,
       `chrome.runtime.connect()`,
-      extensionId
+      extensionId,
     );
 
     // Behavior differs a bit from sendMessage:
@@ -157,7 +157,7 @@ const connectHandler = {
         const MismatchError = (propName, expected, found) =>
           TypeError(
             errorPreamble +
-              `Error at property '${propName}': Invalid type: expected ${expected}, found ${found}.`
+              `Error at property '${propName}': Invalid type: expected ${expected}, found ${found}.`,
           );
         if (k === "name" && typeof v !== "string") {
           throw MismatchError(k, "string", typeof v);
@@ -180,7 +180,7 @@ utils.mockWithProxy(
   window.chrome.runtime,
   "connect",
   function connect() {},
-  connectHandler
+  connectHandler,
 );
 
 function makeConnectResponse() {
