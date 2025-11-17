@@ -1,4 +1,4 @@
-const languages = opt.languages || ["en-US", "en"];
+const languages = opts.languages || ["en-US", "en"];
 utils.replaceGetterWithProxy(
   Object.getPrototypeOf(navigator),
   "languages",
