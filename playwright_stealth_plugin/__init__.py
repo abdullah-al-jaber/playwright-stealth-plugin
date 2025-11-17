@@ -7,21 +7,22 @@ import playwright.async_api
 import playwright_stealth_plugin.evasions.python._utils as utils
 import playwright_stealth_plugin.evasions.python.chrome_app
 import playwright_stealth_plugin.evasions.python.chrome_csi
+import playwright_stealth_plugin.evasions.python.chrome_hairline
 import playwright_stealth_plugin.evasions.python.chrome_load_times
 import playwright_stealth_plugin.evasions.python.chrome_runtime
-import playwright_stealth_plugin.evasions.python.default_args
+import playwright_stealth_plugin.evasions.python.generate_magic_arrays
 import playwright_stealth_plugin.evasions.python.iframe_content_window
 import playwright_stealth_plugin.evasions.python.media_codecs
 import playwright_stealth_plugin.evasions.python.navigator_hardware_concurrency
 import playwright_stealth_plugin.evasions.python.navigator_languages
 import playwright_stealth_plugin.evasions.python.navigator_permissions
+import playwright_stealth_plugin.evasions.python.navigator_platform
 import playwright_stealth_plugin.evasions.python.navigator_plugins
+import playwright_stealth_plugin.evasions.python.navigator_user_agent
 import playwright_stealth_plugin.evasions.python.navigator_vendor
 import playwright_stealth_plugin.evasions.python.navigator_webdriver
-import playwright_stealth_plugin.evasions.python.source_url
-import playwright_stealth_plugin.evasions.python.user_agent_override
 import playwright_stealth_plugin.evasions.python.web_gl_vendor
-import playwright_stealth_plugin.evasions.python.window_outer_dimension
+import playwright_stealth_plugin.evasions.python.window_outer_dimensions
 
 
 async def plugin_code(context: playwright.async_api.BrowserContext):
