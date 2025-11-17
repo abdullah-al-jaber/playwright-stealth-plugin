@@ -1,4 +1,3 @@
-import playwright.async_api
 import playwright_stealth_plugin.evasions.python._utils as _utils
 
 

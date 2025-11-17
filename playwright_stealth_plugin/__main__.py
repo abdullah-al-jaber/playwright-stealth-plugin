@@ -1,8 +1,8 @@
 ## test
 import playwright_stealth_plugin
-import playwright.async_api
 
-async def test():   
+
+async def test():
     async with playwright.async_api.async_playwright() as pw:
         await playwright_stealth_plugin.apply(pw)
         browser = await pw.chromium.launch(headless=False)
@@ -12,9 +12,12 @@ async def test():
         await page.wait_for_timeout(100000)
         await browser.close()
 
+
 def main():
     import asyncio
+
     print("Starting test...")
     asyncio.run(test())
+
 
 main()

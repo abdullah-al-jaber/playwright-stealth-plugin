@@ -3,7 +3,7 @@ import sys
 import typing
 import json
 
-import playwright.async_api
+
 import playwright_stealth_plugin.evasions.python._utils
 import playwright_stealth_plugin.evasions.python.chrome_app
 import playwright_stealth_plugin.evasions.python.chrome_csi
@@ -30,7 +30,11 @@ async def plugin_code(context: playwright.async_api.BrowserContext):
         await context.add_init_script(script)
     for script in playwright_stealth_plugin.evasions.python._utils.scripts:
         await context.add_init_script(script)
-    print("Stealth scripts injected", playwright_stealth_plugin.evasions.python._utils.scripts, playwright_stealth_plugin.evasions.python._utils.variables)
+    print(
+        "Stealth scripts injected",
+        playwright_stealth_plugin.evasions.python._utils.scripts,
+        playwright_stealth_plugin.evasions.python._utils.variables,
+    )
 
 
 async def custom_launch(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.Browser:
