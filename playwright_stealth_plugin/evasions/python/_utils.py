@@ -1,6 +1,7 @@
-import logging
-import typing
+import os
 import json
+import typing
+import logging
 
 
 logger = logging.getLogger("playwright_stealth_plugin")
@@ -13,11 +14,13 @@ options: typing.Dict[str, typing.Dict] = {
 
 
 def read_json(json_path: str) -> typing.Any:
+    json_path = os.path.abspath(os.path.join(os.path.dirname(__file__), json_path))
     with open(json_path, "r") as json_file:
         return json.load(json_file)
 
 
 def read_script(script_path: str) -> str:
+    script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), script_path))
     with open(script_path, "r") as script_file:
         return script_file.read()
 
