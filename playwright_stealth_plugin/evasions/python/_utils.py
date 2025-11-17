@@ -17,7 +17,7 @@ def read_script(script_path: str) -> str:
     with open(script_path, "r") as script_file:
         return script_file.read()
 
-async def run(playwright: playwright.async_api.Playwright):
+async def run():
     script = read_script(f"../javascript/_utils.js")
     scripts.append(script)
     logger.info(f"RUN: {__name__}")

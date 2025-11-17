@@ -1,6 +1,7 @@
 import re
 import sys
 import typing
+import json
 
 import playwright.async_api
 import evasions.python._utils
@@ -24,7 +25,11 @@ import evasions.python.window_outer_dimension
 
 
 async def plugin_code(context: playwright.async_api.BrowserContext):
-    pass
+    for variable_name, variable_value in evasions.python._utils.variables.items():
+        script = f"window.{variable_name} = {json.dumps(variable_value)};"
+        await context.add_init_script(script)
+    for script in evasions.python._utils.scripts:
+        await context.add_init_script(script)
 
 
 async def custom_launch(self, *args: typing.Any, **kwargs: typing.Any) -> playwright.async_api.Browser:
