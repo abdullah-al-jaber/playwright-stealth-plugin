@@ -127,7 +127,9 @@ async def async_run_all() -> None:
 
 
 def sync_run_all() -> None:
-    asyncio.run(async_run_all())
+    for name, module in sys.modules.items():
+        if re.match(r"playwright_stealth_plugin\.evasions\.python\.(.+)", name):
+            module.run()
 
 
 # apply
