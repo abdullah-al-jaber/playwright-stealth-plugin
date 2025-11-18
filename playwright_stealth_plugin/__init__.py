@@ -1,6 +1,6 @@
 import typing
 
-script_folder = "script"
+script_folder = "javascript"
 script_names: typing.List[str] = [
     "utils.js",
     "iframe_content_window.js",
@@ -25,3 +25,13 @@ script_names: typing.List[str] = [
 
 browser_options: typing.Dict[str, typing.Any] = {}
 context_options: typing.Dict[str, typing.Any] = {}
+
+import os
+import sys
+sys.__file__ = os.path.abspath(__file__)
+
+from playwright_stealth_plugin.python import async_api
+from playwright_stealth_plugin.python import sync_api
+
+__all__ = ["async_api", "sync_api"]
+# [line-length: 150]

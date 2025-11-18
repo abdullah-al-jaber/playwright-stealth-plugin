@@ -5,13 +5,11 @@ import typing
 import playwright.sync_api
 import playwright_stealth_plugin
 
-
 browser_options = playwright_stealth_plugin.browser_options
 context_options = playwright_stealth_plugin.context_options
 
 original_launch: typing.Callable[..., playwright.sync_api.Browser]
 original_new_context: typing.Callable[..., playwright.sync_api.BrowserContext]
-
 original_launch_persistent_context: typing.Callable[..., playwright.sync_api.BrowserContext]
 
 
