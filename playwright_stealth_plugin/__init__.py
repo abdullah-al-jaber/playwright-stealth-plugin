@@ -1,6 +1,6 @@
 import typing
 
-script_folder = "javascript"
+script_folder = "script"
 script_names: typing.List[str] = [
     "utils.js",
     "iframe_content_window.js",
