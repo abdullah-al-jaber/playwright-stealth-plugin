@@ -1,4 +1,3 @@
-
 const current_ua = navigator.userAgent;
 Object.defineProperty(Object.getPrototypeOf(navigator), "userAgent", {
   get: () =>

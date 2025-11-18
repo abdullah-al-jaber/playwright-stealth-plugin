@@ -2,7 +2,7 @@
 
 try {
   if (!!window.outerWidth && !!window.outerHeight) {
-    const windowFrame = 85; 
+    const windowFrame = 85;
     window.outerWidth = window.innerWidth;
     console.log(`current window outer height ${window.outerHeight}`);
     window.outerHeight = window.innerHeight + windowFrame;

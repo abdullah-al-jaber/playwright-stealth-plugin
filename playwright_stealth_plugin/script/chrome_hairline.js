@@ -1,10 +1,7 @@
-
-
 const elementDescriptor = Object.getOwnPropertyDescriptor(
   HTMLElement.prototype,
   "offsetHeight",
 );
-
 
 Object.defineProperty(HTMLDivElement.prototype, "offsetHeight", {
   ...elementDescriptor,

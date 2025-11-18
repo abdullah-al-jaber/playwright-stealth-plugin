@@ -1,15 +1,11 @@
 if (!window.chrome) {
-  
-  
   Object.defineProperty(window, "chrome", {
     writable: true,
     enumerable: true,
-    configurable: false, 
-    value: {}, 
+    configurable: false,
+    value: {},
   });
 }
-
-
 
 if (
   !("csi" in window.chrome) &&
@@ -23,7 +19,7 @@ if (
       onloadT: csi_timing.domContentLoadedEventEnd,
       startE: csi_timing.navigationStart,
       pageT: Date.now() - csi_timing.navigationStart,
-      tran: 15, 
+      tran: 15,
     };
   };
   utils.patchToString(window.chrome.csi);

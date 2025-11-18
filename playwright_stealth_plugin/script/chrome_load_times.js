@@ -1,19 +1,15 @@
 if (!window.chrome) {
-  
-  
   Object.defineProperty(window, "chrome", {
     writable: true,
     enumerable: true,
-    configurable: false, 
-    value: {}, 
+    configurable: false,
+    value: {},
   });
 }
-
 
 if ("loadTimes" in window.chrome) {
   throw new Error("skipping chrome loadtimes update, running in headfull mode");
 }
-
 
 if (
   window.performance ||
@@ -22,14 +18,11 @@ if (
 ) {
   const { performance } = window;
 
-  
-  
   const ntEntryFallback = {
     nextHopProtocol: "h2",
     type: "other",
   };
 
-  
   const protocolInfo = {
     get connectionInfo() {
       const ntEntry =
@@ -37,8 +30,6 @@ if (
       return ntEntry.nextHopProtocol;
     },
     get npnNegotiatedProtocol() {
-      
-      
       const ntEntry =
         performance.getEntriesByType("navigation")[0] || ntEntryFallback;
       return ["h2", "hq"].includes(ntEntry.nextHopProtocol)
@@ -51,21 +42,14 @@ if (
       return ntEntry.type;
     },
     get wasAlternateProtocolAvailable() {
-      
-      
-      
       return false;
     },
     get wasFetchedViaSpdy() {
-      
-      
       const ntEntry =
         performance.getEntriesByType("navigation")[0] || ntEntryFallback;
       return ["h2", "hq"].includes(ntEntry.nextHopProtocol);
     },
     get wasNpnNegotiated() {
-      
-      
       const ntEntry =
         performance.getEntriesByType("navigation")[0] || ntEntryFallback;
       return ["h2", "hq"].includes(ntEntry.nextHopProtocol);
@@ -74,7 +58,6 @@ if (
 
   const { timing } = window.performance;
 
-  
   function toFixed(num, fixed) {
     var re = new RegExp("^-?\\d+(?:.\\d{0," + (fixed || -1) + "})?");
     return num.toString().match(re)[0];
@@ -82,7 +65,6 @@ if (
 
   const timingInfo = {
     get firstPaintAfterLoadTime() {
-      
       return 0;
     },
     get requestTime() {
@@ -102,7 +84,7 @@ if (
     },
     get firstPaintTime() {
       const fpEntry = performance.getEntriesByType("paint")[0] || {
-        startTime: timing.loadEventEnd / 1000, 
+        startTime: timing.loadEventEnd / 1000,
       };
       return toFixed((fpEntry.startTime + performance.timeOrigin) / 1000, 3);
     },

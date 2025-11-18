@@ -41,30 +41,25 @@ const STATIC_DATA = {
 };
 
 if (!window.chrome) {
-  
-  
   Object.defineProperty(window, "chrome", {
     writable: true,
     enumerable: true,
-    configurable: false, 
-    value: {}, 
+    configurable: false,
+    value: {},
   });
 }
-
 
 const existsAlready = "runtime" in window.chrome;
 
 const isNotSecure = !window.location.protocol.startsWith("https");
 if (!(existsAlready || (isNotSecure && !opts.runOnInsecureOrigins))) {
   window.chrome.runtime = {
-    
-    
     ...STATIC_DATA,
-    
+
     get id() {
       return undefined;
     },
-    
+
     connect: null,
     sendMessage: null,
   };
@@ -80,17 +75,13 @@ if (!(existsAlready || (isNotSecure && !opts.runOnInsecureOrigins))) {
     ),
   });
 
-  
-  
   const isValidExtensionID = (str) =>
     str.length === 32 && str.toLowerCase().match(/^[a-p]+$/);
 
-  
   const sendMessageHandler = {
     apply: function (target, ctx, args) {
       const [extensionId, options, responseCallback] = args || [];
 
-      
       const errorPreamble = `Error in invocation of runtime.sendMessage(optional string extensionId, any message, optional object options, optional function responseCallback): `;
       const Errors = makeCustomRuntimeErrors(
         errorPreamble,
@@ -98,7 +89,6 @@ if (!(existsAlready || (isNotSecure && !opts.runOnInsecureOrigins))) {
         extensionId,
       );
 
-      
       const noArguments = args.length === 0;
       const tooManyArguments = args.length > 4;
       const incorrectOptions = options && typeof options !== "object";
@@ -113,12 +103,10 @@ if (!(existsAlready || (isNotSecure && !opts.runOnInsecureOrigins))) {
         throw Errors.NoMatchingSignature;
       }
 
-      
       if (args.length < 2) {
         throw Errors.MustSpecifyExtensionID;
       }
 
-      
       if (typeof extensionId !== "string") {
         throw Errors.NoMatchingSignature;
       }
@@ -127,7 +115,7 @@ if (!(existsAlready || (isNotSecure && !opts.runOnInsecureOrigins))) {
         throw Errors.InvalidExtensionID;
       }
 
-      return undefined; 
+      return undefined;
     },
   };
   utils.mockWithProxy(
@@ -137,11 +125,10 @@ if (!(existsAlready || (isNotSecure && !opts.runOnInsecureOrigins))) {
     sendMessageHandler,
   );
 
-    const connectHandler = {
+  const connectHandler = {
     apply: function (target, ctx, args) {
       const [extensionId, connectInfo] = args || [];
 
-      
       const errorPreamble = `Error in invocation of runtime.connect(optional string extensionId, optional object connectInfo): `;
       const Errors = makeCustomRuntimeErrors(
         errorPreamble,
@@ -149,7 +136,6 @@ if (!(existsAlready || (isNotSecure && !opts.runOnInsecureOrigins))) {
         extensionId,
       );
 
-      
       const noArguments = args.length === 0;
       const emptyStringArgument = args.length === 1 && extensionId === "";
       if (noArguments || emptyStringArgument) {
@@ -172,17 +158,15 @@ if (!(existsAlready || (isNotSecure && !opts.runOnInsecureOrigins))) {
         throw Errors.InvalidExtensionID;
       }
 
-      
       const validateConnectInfo = (ci) => {
-        
         if (args.length > 1) {
           throw Errors.NoMatchingSignature;
         }
-        
+
         if (Object.keys(ci).length === 0) {
           throw Errors.MustSpecifyExtensionID;
         }
-        
+
         Object.entries(ci).forEach(([k, v]) => {
           const isExpected = ["name", "includeTlsChannelId"].includes(k);
           if (!isExpected) {
@@ -206,7 +190,6 @@ if (!(existsAlready || (isNotSecure && !opts.runOnInsecureOrigins))) {
         throw Errors.MustSpecifyExtensionID;
       }
 
-      
       return utils.patchToStringNested(makeConnectResponse());
     },
   };

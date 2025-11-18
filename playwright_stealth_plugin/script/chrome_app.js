@@ -1,14 +1,11 @@
 if (!window.chrome) {
-  
-  
   Object.defineProperty(window, "chrome", {
     writable: true,
     enumerable: true,
-    configurable: false, 
-    value: {}, 
+    configurable: false,
+    value: {},
   });
 }
-
 
 if (!("app" in window.chrome)) {
   const makeError = {
@@ -18,8 +15,6 @@ if (!("app" in window.chrome)) {
     },
   };
 
-  
-  
   const APP_STATIC_DATA = JSON.parse(
     `
 {

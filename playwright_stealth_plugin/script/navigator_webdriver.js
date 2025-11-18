@@ -1,4 +1,3 @@
-
 Object.defineProperty(Object.getPrototypeOf(navigator), "webdriver", {
   set: undefined,
   enumerable: true,
@@ -10,7 +9,6 @@ Object.defineProperty(Object.getPrototypeOf(navigator), "webdriver", {
     ).get,
     {
       apply: (target, thisArg, args) => {
-        
         Reflect.apply(target, thisArg, args);
         return false;
       },

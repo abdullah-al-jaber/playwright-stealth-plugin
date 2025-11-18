@@ -47,7 +47,6 @@ data = {
   ],
 };
 
-
 const hasPlugins = "plugins" in navigator && navigator.plugins.length;
 if (!hasPlugins) {
   const mimeTypes = generateMagicArray(
@@ -63,8 +62,6 @@ if (!hasPlugins) {
     "name",
   );
 
-  
-  
   for (const pluginData of data.plugins) {
     pluginData.__mimeTypes.forEach((type, index) => {
       plugins[pluginData.name][index] = mimeTypes[type];
@@ -72,7 +69,7 @@ if (!hasPlugins) {
       Object.defineProperty(mimeTypes[type], "enabledPlugin", {
         value: JSON.parse(JSON.stringify(plugins[pluginData.name])),
         writable: false,
-        enumerable: false, 
+        enumerable: false,
         configurable: false,
       });
     });
