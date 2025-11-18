@@ -28,10 +28,10 @@ context_options: typing.Dict[str, typing.Any] = {}
 
 import os
 import sys
+
 sys.__file__ = os.path.abspath(__file__)
 
-from playwright_stealth_plugin.python import async_api
-from playwright_stealth_plugin.python import sync_api
+from playwright_stealth_plugin.python import async_api, sync_api
 
 __all__ = ["async_api", "sync_api"]
 # [line-length: 150]
