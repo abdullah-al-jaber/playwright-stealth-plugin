@@ -1,17 +1,17 @@
 try {
-  // Adds a contentWindow proxy to the provided iframe element
+  
   const addContentWindowProxy = (iframe) => {
     const contentWindowProxy = {
       get(target, key) {
-        // Now to the interesting part:
-        // We actually make this thing behave like a regular iframe window,
-        // by intercepting calls to e.g. `.self` and redirect it to the correct thing. :)
-        // That makes it possible for these assertions to be correct:
-        // iframe.contentWindow.self === window.top // must be false
+        
+        
+        
+        
+        
         if (key === "self") {
           return this;
         }
-        // iframe.contentWindow.frameElement === iframe // must be true
+        
         if (key === "frameElement") {
           return iframe;
         }
@@ -26,7 +26,7 @@ try {
           return proxy;
         },
         set(newValue) {
-          return newValue; // contentWindow is immutable
+          return newValue; 
         },
         enumerable: true,
         configurable: false,
@@ -34,24 +34,24 @@ try {
     }
   };
 
-  // Handles iframe element creation, augments `srcdoc` property so we can intercept further
+  
   const handleIframeCreation = (target, thisArg, args) => {
     const iframe = target.apply(thisArg, args);
 
-    // We need to keep the originals around
+    
     const _iframe = iframe;
     const _srcdoc = _iframe.srcdoc;
 
-    // Add hook for the srcdoc property
-    // We need to be very surgical here to not break other iframes by accident
+    
+    
     Object.defineProperty(iframe, "srcdoc", {
-      configurable: true, // Important, so we can reset this later
+      configurable: true, 
       get: function () {
         return _iframe.srcdoc;
       },
       set: function (newValue) {
         addContentWindowProxy(this);
-        // Reset property, the hook is only needed once
+        
         Object.defineProperty(iframe, "srcdoc", {
           configurable: false,
           writable: false,
@@ -63,11 +63,11 @@ try {
     return iframe;
   };
 
-  // Adds a hook to intercept iframe creation events
+  
   const addIframeCreationSniffer = () => {
-    /* global document */
+    
     const createElementHandler = {
-      // Make toString() native
+      
       get(target, key) {
         return Reflect.get(target, key);
       },
@@ -75,19 +75,19 @@ try {
         const isIframe =
           args && args.length && `${args[0]}`.toLowerCase() === "iframe";
         if (!isIframe) {
-          // Everything as usual
+          
           return target.apply(thisArg, args);
         } else {
           return handleIframeCreation(target, thisArg, args);
         }
       },
     };
-    // All this just due to iframes with srcdoc bug
+    
     utils.replaceWithProxy(document, "createElement", createElementHandler);
   };
 
-  // Let's go
+  
   addIframeCreationSniffer();
 } catch (err) {
-  // console.warn(err)
+  
 }

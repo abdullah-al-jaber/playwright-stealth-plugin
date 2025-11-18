@@ -13,7 +13,7 @@ const handler = {
 };
 
 utils.replaceWithProxy(
-  window.navigator.permissions.__proto__, // eslint-disable-line no-proto
+  window.navigator.permissions.__proto__, 
   "query",
   handler,
 );

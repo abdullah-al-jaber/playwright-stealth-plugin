@@ -14,7 +14,7 @@ dependencies = ["playwright"]
 requires-python = ">=3.10"
 
 [project.urls]
-"Source Code" = "https://github.com/abdullah-al-jaber/playwright-stealth-plugin"
+"Source Code" = "https:
 
 [tool.setuptools.package-data]
 "playwright_stealth_plugin" = ["**/*"]

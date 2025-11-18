@@ -1,15 +1,15 @@
 if (!window.chrome) {
-  // Use the exact property descriptor found in headful Chrome
-  // fetch it via `Object.getOwnPropertyDescriptor(window, 'chrome')`
+  
+  
   Object.defineProperty(window, "chrome", {
     writable: true,
     enumerable: true,
-    configurable: false, // note!
-    value: {}, // We'll extend that later
+    configurable: false, 
+    value: {}, 
   });
 }
 
-// app in window.chrome means we're running headful and don't need to mock anything
+
 if (!("app" in window.chrome)) {
   const makeError = {
     ErrorInInvocation: (fn) => {
@@ -18,8 +18,8 @@ if (!("app" in window.chrome)) {
     },
   };
 
-  // There's a some static data in that property which doesn't seem to change,
-  // we should periodically check for updates: `JSON.stringify(window.app, null, 2)`
+  
+  
   const APP_STATIC_DATA = JSON.parse(
     `
 {
