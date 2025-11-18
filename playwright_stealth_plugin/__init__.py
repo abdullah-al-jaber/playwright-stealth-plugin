@@ -4,7 +4,7 @@ script_folder = "javascript"
 script_names: typing.List[str] = [
     "utils.js",
     "iframe_content_window.js",
-    "navigator_user_agent.",
+    "navigator_user_agent.js",
     "chrome_app.js",
     "media_codecs.js",
     "navigator_vendor.js",
