@@ -49,7 +49,3 @@ def apply(playwright: playwright.sync_api.Playwright):
 
     type(playwright.chromium).launch = custom_launch
     type(playwright.chromium).launch_persistent_context = custom_launch_persistent_context
-
-
-__all__ = ["apply"]
-# [line-length: 150]

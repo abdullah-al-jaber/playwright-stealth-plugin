@@ -31,3 +31,5 @@ import sys
 import playwright_stealth_plugin
 
 sys.__file__ = os.path.abspath(playwright_stealth_plugin.__file__)
+
+# [line-length: 150]
