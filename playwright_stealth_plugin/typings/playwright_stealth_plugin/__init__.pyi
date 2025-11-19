@@ -1,6 +1,0 @@
-import playwright_stealth_plugin.python.async_api
-import playwright_stealth_plugin.python.sync_api
-
-async_apply = ...
-sync_apply = ...
-__all__ = ["async_apply", "sync_apply"]
