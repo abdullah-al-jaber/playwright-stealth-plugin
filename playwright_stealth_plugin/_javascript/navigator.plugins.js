@@ -47,6 +47,7 @@ data = {
   ],
 };
 
+// That means we're running headful
 const hasPlugins = "plugins" in navigator && navigator.plugins.length;
 if (!hasPlugins) {
   const mimeTypes = generateMagicArray(
@@ -62,6 +63,8 @@ if (!hasPlugins) {
     "name",
   );
 
+  // Plugin and MimeType cross-reference each other, let's do that now
+  // Note: We're looping through `data.plugins` here, not the generated `plugins`
   for (const pluginData of data.plugins) {
     pluginData.__mimeTypes.forEach((type, index) => {
       plugins[pluginData.name][index] = mimeTypes[type];
@@ -69,7 +72,7 @@ if (!hasPlugins) {
       Object.defineProperty(mimeTypes[type], "enabledPlugin", {
         value: JSON.parse(JSON.stringify(plugins[pluginData.name])),
         writable: false,
-        enumerable: false,
+        enumerable: false, // Important: `JSON.stringify(navigator.plugins)`
         configurable: false,
       });
     });

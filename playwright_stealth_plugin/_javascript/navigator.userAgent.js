@@ -1,3 +1,4 @@
+// replace Headless references in default useragent
 const current_ua = navigator.userAgent;
 Object.defineProperty(Object.getPrototypeOf(navigator), "userAgent", {
   get: () =>
