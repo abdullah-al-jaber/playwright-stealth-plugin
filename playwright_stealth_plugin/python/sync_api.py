@@ -3,10 +3,10 @@ import sys
 import typing
 
 import playwright.sync_api
-import playwright_stealth_plugin
+import playwright_stealth_plugin.python.config
 
-browser_options = playwright_stealth_plugin.browser_options
-context_options = playwright_stealth_plugin.context_options
+browser_options = playwright_stealth_plugin.python.config.browser_options
+context_options = playwright_stealth_plugin.python.config.context_options
 
 original_launch: typing.Callable[..., playwright.sync_api.Browser]
 original_new_context: typing.Callable[..., playwright.sync_api.BrowserContext]
@@ -14,8 +14,8 @@ original_launch_persistent_context: typing.Callable[..., playwright.sync_api.Bro
 
 
 def plugin_code(context: playwright.sync_api.BrowserContext):
-    for script_name in playwright_stealth_plugin.script_names:
-        relative_path = os.path.join(os.path.dirname(sys.__file__), playwright_stealth_plugin.script_folder, script_name)
+    for script_name in playwright_stealth_plugin.python.config.script_names:
+        relative_path = os.path.join(os.path.dirname(sys.__file__), playwright_stealth_plugin.python.config.script_folder, script_name)
         absolute_path = os.path.abspath(relative_path)
         with open(absolute_path, mode="r", encoding="utf-8") as script_file:
             script_content = script_file.read()
