@@ -460,4 +460,4 @@ utils.materializeFns = (fnStrObj = { hello: "() => 'world'" }) => {
 // module.exports = utils
 
 window.utils = utils;
-window.opts = {}
+window.opts = {};
