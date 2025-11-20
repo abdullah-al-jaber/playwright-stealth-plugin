@@ -28,6 +28,7 @@ async def custom_launch(self: playwright.async_api.BrowserType, *args: typing.An
     global original_new_context
     original_new_context = type(browser).new_context
     type(browser).new_context = custom_new_context
+    type(browser).new_page = custom_new_page
     return browser
 
 
@@ -35,6 +36,12 @@ async def custom_new_context(self: playwright.async_api.Browser, *args: typing.A
     context = await original_new_context(self, *args, **context_options, **kwargs)
     await plugin_code(context)
     return context
+
+
+async def custom_new_page(self: playwright.async_api.Browser, *args: typing.Any, **kwargs: typing.Any):
+    context = await self.new_context()
+    page = await context.new_page(*args, **kwargs)
+    return page
 
 
 async def custom_launch_persistent_context(self: playwright.async_api.BrowserType, *args: typing.Any, **kwargs: typing.Any):
