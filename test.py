@@ -1,3 +1,0 @@
-import playwright_stealth_plugin
-
-playwright_stealth_plugin
