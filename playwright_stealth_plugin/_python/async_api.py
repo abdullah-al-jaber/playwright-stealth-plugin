@@ -26,7 +26,7 @@ async def page_or_context_plugin_code(context_or_page: playwright.async_api.Page
 
 async def cdp_plugin_code(cdp_session: playwright.async_api.CDPSession):
     for script_content in scripts_contents:
-        await cdp_session.send("Page.addScriptToEvaluateOnNewDocument", {"source": script_content}) # type: ignore
+        await cdp_session.send("Page.addScriptToEvaluateOnNewDocument", {"source": script_content})  # type: ignore
 
 
 async def custom_new_page(self: playwright.async_api.Browser | playwright.async_api.BrowserContext, *args: typing.Any, **kwargs: typing.Any):
