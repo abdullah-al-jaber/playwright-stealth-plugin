@@ -23,7 +23,9 @@ script_names: typing.List[str] = [
     # "webgl.vendor.js",
 ]
 
-browser_options: typing.Dict[str, typing.Any] = {}
+browser_options: typing.Dict[str, typing.Any] = {
+    "args": ["--disable-blink-features=AutomationControlled"]
+}
 context_options: typing.Dict[str, typing.Any] = {}
 
 import os
