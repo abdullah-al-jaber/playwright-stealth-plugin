@@ -26,7 +26,7 @@ def page_or_context_plugin_code(context_or_page: playwright.sync_api.Page | play
 
 def cdp_plugin_code(cdp_session: playwright.sync_api.CDPSession):
     for script_content in scripts_contents:
-        cdp_session.send("Page.addScriptToEvaluateOnNewDocument", {"source": script_content})
+        cdp_session.send("Page.addScriptToEvaluateOnNewDocument", {"source": script_content}) # type: ignore
 
 
 def custom_new_page(self: playwright.sync_api.Browser | playwright.sync_api.BrowserContext, *args: typing.Any, **kwargs: typing.Any):
