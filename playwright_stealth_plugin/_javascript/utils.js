@@ -1,7 +1,7 @@
 /**
  * A set of shared utility functions specifically to modify native browser APIs without leaving traces.
  */
-const utils = {};
+var utils = {};
 
 /**
  * Wraps a JS Proxy Handler and strips it's presence from error stacks, in case the traps throw.
@@ -44,7 +44,7 @@ utils.stripProxyFromErrors = (handler = {}) => {
               .filter((line, index) => index !== 1)
               // Check if the line starts with one of our blacklisted strings
               .filter(
-                (line) => !blacklist.some((bl) => line.trim().startsWith(bl)),
+                (line) => !blacklist.some((bl) => line.trim().startsWith(bl))
               )
               .join("\n")
           );
@@ -54,7 +54,7 @@ utils.stripProxyFromErrors = (handler = {}) => {
           const stackArr = stack.split("\n");
           const anchor = `at window.<computed>.<computed> [as ${trap}] `; // Known first Proxy line in chromium
           const anchorIndex = stackArr.findIndex((line) =>
-            line.trim().startsWith(anchor),
+            line.trim().startsWith(anchor)
           );
           if (anchorIndex === -1) {
             return false; // 404, anchor not found
@@ -84,7 +84,7 @@ utils.stripProxyFromErrors = (handler = {}) => {
 utils.stripErrorWithAnchor = (err, anchor) => {
   const stackArr = err.stack.split("\n");
   const anchorIndex = stackArr.findIndex((line) =>
-    line.trim().startsWith(anchor),
+    line.trim().startsWith(anchor)
   );
   if (anchorIndex === -1) {
     return err; // 404, anchor not found
@@ -199,7 +199,7 @@ utils.patchToString = (obj, str = "") => {
       // Check if the toString protype of the context is the same as the global prototype,
       // if not indicates that we are doing a check across different windows., e.g. the iframeWithdirect` test case
       const hasSameProto = Object.getPrototypeOf(
-        Function.prototype.toString,
+        Function.prototype.toString
       ).isPrototypeOf(ctx.toString); // eslint-disable-line no-prototype-builtins
       if (!hasSameProto) {
         // Pass the call on to the local Function.prototype.toString instead
@@ -252,7 +252,7 @@ utils.redirectToString = (proxyObj, originalObj) => {
       // Check if the toString protype of the context is the same as the global prototype,
       // if not indicates that we are doing a check across different windows., e.g. the iframeWithdirect` test case
       const hasSameProto = Object.getPrototypeOf(
-        Function.prototype.toString,
+        Function.prototype.toString
       ).isPrototypeOf(ctx.toString); // eslint-disable-line no-prototype-builtins
       if (!hasSameProto) {
         // Pass the call on to the local Function.prototype.toString instead
@@ -285,7 +285,7 @@ utils.replaceWithProxy = (obj, propName, handler) => {
   const originalObj = obj[propName];
   const proxyObj = new Proxy(
     obj[propName],
-    utils.stripProxyFromErrors(handler),
+    utils.stripProxyFromErrors(handler)
   );
 
   utils.replaceProperty(obj, propName, { value: proxyObj });
@@ -416,7 +416,7 @@ utils.stringifyFns = (fnObj = { hello: () => "world" }) => {
   return (Object.fromEntries || fromEntries)(
     Object.entries(fnObj)
       .filter(([key, value]) => typeof value === "function")
-      .map(([key, value]) => [key, value.toString()]), // eslint-disable-line no-eval
+      .map(([key, value]) => [key, value.toString()]) // eslint-disable-line no-eval
   );
 };
 
@@ -436,7 +436,7 @@ utils.materializeFns = (fnStrObj = { hello: "() => 'world'" }) => {
         // arrow functions just work
         return [key, eval(value)]; // eslint-disable-line no-eval
       }
-    }),
+    })
   );
 };
 
@@ -444,9 +444,21 @@ utils.arrayEqual = (arr1, arr2) =>
   arr1.length === arr2.length &&
   arr1.every((value, index) => value === arr2[index]);
 
-const log = (...args) =>
+window.log = (...args) =>
   opts.script_logging && console.log("[playwright-stealth-plugin]:", ...args);
-const warn = (...args) =>
+window.warn = (...args) =>
   opts.script_logging && console.warn("[playwright-stealth-plugin]:", ...args);
 
+window.utils = utils;
+
+opts = {
+  navigator_hardware_concurrency: true,
+  navigator_languages_override: ["en-US", "en"],
+  navigator_platform: "Win32",
+  navigator_user_agent: null,
+  navigator_vendor: null,
+  webgl_renderer: "Intel Iris OpenGL Engine",
+  webgl_vendor: "Intel Inc.",
+  script_logging: false,
+};
 log(JSON.stringify(opts));

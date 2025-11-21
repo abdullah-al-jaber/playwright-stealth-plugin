@@ -12,13 +12,13 @@ script_names: typing.List[str] = [
     "error.prototype.js",
     "iframe.contentWindow.js",
     "media.codecs.js",
-    "navigator.hardwareConcurrency.js",
-    "navigator.languages.js",
+    # "navigator.hardwareConcurrency.js",
+    # "navigator.languages.js",s
     "navigator.permissions.js",
-    "navigator.platform.js",
+    # "navigator.platform.js",
     "navigator.plugins.js",
     "navigator.userAgent.js",
-    "navigator.vendor.js",
+    # "navigator.vendor.js",
     "navigator.webdriver.js",
     "webgl.vendor.js",
 ]
