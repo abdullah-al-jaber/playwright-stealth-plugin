@@ -7,7 +7,7 @@ _Easy to work - No need for extra documentation !_
 `Chromium Browser Support - YES`
 
 ```
-USE CHROME OVER CDP.
+USE CHROME OVER CDP. HEADLESS - NO
 BETTER RESULT THAN ANY STEALTH MODULE.
 ```
 
