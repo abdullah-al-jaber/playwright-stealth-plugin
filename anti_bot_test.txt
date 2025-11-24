@@ -1,0 +1,8 @@
+# website test
+https://infosimples.github.io/detect-headless/
+https://bot.sannysoft.com/
+https://www.browserscan.net/bot-detection
+https://pixelscan.net/bot-check
+
+# library test
+https://github.com/fingerprintjs/BotD
