@@ -10,28 +10,20 @@ browser_options = playwright_stealth_plugin._python.config.browser_options
 context_options = playwright_stealth_plugin._python.config.context_options
 
 original_new_page: typing.Callable[..., playwright.sync_api.Page]
+original_new_context: typing.Callable[..., playwright.sync_api.BrowserContext]
 
 original_launch: typing.Callable[..., playwright.sync_api.Browser]
-original_new_context: typing.Callable[..., playwright.sync_api.BrowserContext]
-original_new_browser_cdp_session: typing.Callable[..., playwright.sync_api.CDPSession]
-
 original_launch_persistent_context: typing.Callable[..., playwright.sync_api.BrowserContext]
-original_new_cdp_session: typing.Callable[..., playwright.sync_api.CDPSession]
 
 
-def page_or_context_plugin_code(context_or_page: playwright.sync_api.Page | playwright.sync_api.BrowserContext):
+def plugin_code(context_or_page: playwright.sync_api.Page | playwright.sync_api.BrowserContext):
     for script_content in scripts_contents:
         context_or_page.add_init_script(script_content)
 
 
-def cdp_plugin_code(cdp_session: playwright.sync_api.CDPSession):
-    for script_content in scripts_contents:
-        cdp_session.send("Page.addScriptToEvaluateOnNewDocument", {"source": script_content})  # type: ignore
-
-
 def custom_new_page(self: playwright.sync_api.Browser | playwright.sync_api.BrowserContext, *args: typing.Any, **kwargs: typing.Any):
     page = original_new_page(self, *args, **kwargs)
-    page_or_context_plugin_code(page)
+    plugin_code(page)
     return page
 
 
@@ -43,20 +35,13 @@ def custom_launch(self: playwright.sync_api.BrowserType, *args: typing.Any, **kw
     original_new_browser_cdp_session = type(browser).new_browser_cdp_session
     type(browser).new_page = custom_new_page
     type(browser).new_context = custom_new_context
-    type(browser).new_browser_cdp_session = custom_new_browser_cdp_session
     return browser
 
 
 def custom_new_context(self: playwright.sync_api.Browser, *args: typing.Any, **kwargs: typing.Any):
     context = original_new_context(self, *args, **context_options, **kwargs)
-    page_or_context_plugin_code(context)
+    plugin_code(context)
     return context
-
-
-def custom_new_browser_cdp_session(self: playwright.sync_api.Browser):
-    cdp_session = original_new_browser_cdp_session(self)
-    cdp_plugin_code(cdp_session)
-    return cdp_session
 
 
 def custom_launch_persistent_context(self: playwright.sync_api.BrowserType, *args: typing.Any, **kwargs: typing.Any):
@@ -65,14 +50,7 @@ def custom_launch_persistent_context(self: playwright.sync_api.BrowserType, *arg
     original_new_page = type(context).new_page
     original_new_cdp_session = type(context).new_cdp_session
     type(context).new_page = custom_new_page
-    type(context).new_cdp_session = custom_new_cdp_session
     return context
-
-
-def custom_new_cdp_session(self: playwright.sync_api.BrowserContext, page: playwright.sync_api.Page | playwright.sync_api.Frame):
-    cdp_session = original_new_cdp_session(self, page)
-    cdp_plugin_code(cdp_session)
-    return cdp_session
 
 
 def apply(playwright: playwright.sync_api.Playwright):

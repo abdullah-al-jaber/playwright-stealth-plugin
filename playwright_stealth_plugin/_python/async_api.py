@@ -10,28 +10,20 @@ browser_options = playwright_stealth_plugin._python.config.browser_options
 context_options = playwright_stealth_plugin._python.config.context_options
 
 original_new_page: typing.Callable[..., typing.Awaitable[playwright.async_api.Page]]
+original_new_context: typing.Callable[..., typing.Awaitable[playwright.async_api.BrowserContext]]
 
 original_launch: typing.Callable[..., typing.Awaitable[playwright.async_api.Browser]]
-original_new_context: typing.Callable[..., typing.Awaitable[playwright.async_api.BrowserContext]]
-original_new_browser_cdp_session: typing.Callable[..., typing.Awaitable[playwright.async_api.CDPSession]]
-
 original_launch_persistent_context: typing.Callable[..., typing.Awaitable[playwright.async_api.BrowserContext]]
-original_new_cdp_session: typing.Callable[..., typing.Awaitable[playwright.async_api.CDPSession]]
 
 
-async def page_or_context_plugin_code(context_or_page: playwright.async_api.Page | playwright.async_api.BrowserContext):
+async def plugin_code(context_or_page: playwright.async_api.Page | playwright.async_api.BrowserContext):
     for script_content in scripts_contents:
         await context_or_page.add_init_script(script_content)
 
 
-async def cdp_plugin_code(cdp_session: playwright.async_api.CDPSession):
-    for script_content in scripts_contents:
-        await cdp_session.send("Page.addScriptToEvaluateOnNewDocument", {"source": script_content})  # type: ignore
-
-
 async def custom_new_page(self: playwright.async_api.Browser | playwright.async_api.BrowserContext, *args: typing.Any, **kwargs: typing.Any):
     page = await original_new_page(self, *args, **kwargs)
-    await page_or_context_plugin_code(page)
+    await plugin_code(page)
     return page
 
 
@@ -43,20 +35,13 @@ async def custom_launch(self: playwright.async_api.BrowserType, *args: typing.An
     original_new_browser_cdp_session = type(browser).new_browser_cdp_session
     type(browser).new_page = custom_new_page
     type(browser).new_context = custom_new_context
-    type(browser).new_browser_cdp_session = custom_new_browser_cdp_session
     return browser
 
 
 async def custom_new_context(self: playwright.async_api.Browser, *args: typing.Any, **kwargs: typing.Any):
     context = await original_new_context(self, *args, **context_options, **kwargs)
-    await page_or_context_plugin_code(context)
+    await plugin_code(context)
     return context
-
-
-async def custom_new_browser_cdp_session(self: playwright.async_api.Browser):
-    cdp_session = await original_new_browser_cdp_session(self)
-    await cdp_plugin_code(cdp_session)
-    return cdp_session
 
 
 async def custom_launch_persistent_context(self: playwright.async_api.BrowserType, *args: typing.Any, **kwargs: typing.Any):
@@ -65,14 +50,7 @@ async def custom_launch_persistent_context(self: playwright.async_api.BrowserTyp
     original_new_page = type(context).new_page
     original_new_cdp_session = type(context).new_cdp_session
     type(context).new_page = custom_new_page
-    type(context).new_cdp_session = custom_new_cdp_session
     return context
-
-
-async def custom_new_cdp_session(self: playwright.async_api.BrowserContext, page: playwright.async_api.Page | playwright.async_api.Frame):
-    cdp_session = await original_new_cdp_session(self, page)
-    await cdp_plugin_code(cdp_session)
-    return cdp_session
 
 
 async def apply(playwright: playwright.async_api.Playwright):
