@@ -4,6 +4,31 @@ Playwright Plugin for Anti-Bot Stealth.
 
 _Easy to work - No need for extra documentation !_
 
-`Chromium Browser Support - YES`
+`Chromium Browser Support - YES`  
+`FireFox, Webkit Support- NO`
 
-`OTHER BROWSER SUPPORT - NO`
+## `Website Test`
+
+| Website                                                   | Difficulty | RESULT |
+| --------------------------------------------------------- | :--------: | :----: |
+| [SONNY SOFT](https://bot.sannysoft.com/)                  |    EASY    | **NO** |
+| [PIXEL SCAN](https://pixelscan.net/bot-check)             |   MEDIUM   | **NO** |
+| [BROWSER SCAN](https://www.browserscan.net/bot-detection) |    HARD    | **NO** |
+
+You can do more test !
+
+## _`Library Test`_
+
+| Library                                                       | Difficulty | RESULT |
+| ------------------------------------------------------------- | :--------: | :----: |
+| [BotD - FingerprintJS](https://github.com/fingerprintjs/BotD) |    HARD    | **NO** |
+
+Code Snippets : -
+
+```JavaScript
+const botdPromise = import('https://openfpcdn.io/botd/v2').then((Botd) => Botd.load())
+botdPromise
+    .then((botd) => botd.detect())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error))
+```
