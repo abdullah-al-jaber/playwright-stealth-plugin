@@ -17,7 +17,7 @@ _Easy to work - No need for extra documentation !_
 
 You can do more test !
 
-## _`Library Test`_
+## `Library Test`
 
 | Library                                                       | Difficulty | RESULT |
 | ------------------------------------------------------------- | :--------: | :----: |
