@@ -9,19 +9,19 @@ _Easy to work - No need for extra documentation !_
 
 ## `Website Test`
 
-| Website                                                   | Difficulty | RESULT |
-| --------------------------------------------------------- | :--------: | :----: |
-| [SONNY SOFT](https://bot.sannysoft.com/)                  |    EASY    | **NO** |
-| [PIXEL SCAN](https://pixelscan.net/bot-check)             |   MEDIUM   | **NO** |
-| [BROWSER SCAN](https://www.browserscan.net/bot-detection) |    HARD    | **NO** |
+| Website                                                   | Difficulty | RESULT  |
+| --------------------------------------------------------- | :--------: | :-----: |
+| [SONNY SOFT](https://bot.sannysoft.com/)                  |    EASY    | **YES** |
+| [PIXEL SCAN](https://pixelscan.net/bot-check)             |   MEDIUM   | **NO**  |
+| [BROWSER SCAN](https://www.browserscan.net/bot-detection) |    HARD    | **YES** |
 
 You can do more test !
 
 ## `Library Test`
 
-| Library                                                       | Difficulty | RESULT |
-| ------------------------------------------------------------- | :--------: | :----: |
-| [BotD - FingerprintJS](https://github.com/fingerprintjs/BotD) |    HARD    | **NO** |
+| Library                                                       | Difficulty | RESULT  |
+| ------------------------------------------------------------- | :--------: | :-----: |
+| [BotD - FingerprintJS](https://github.com/fingerprintjs/BotD) |    HARD    | **YES** |
 
 Code Snippets : -
 
