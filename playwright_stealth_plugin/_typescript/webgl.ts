@@ -13,5 +13,5 @@ const webgl = () => {
     });
 };
 
-webgl()
+webgl();
 window.worker_scripts.push(`(${webgl.toString()})();`);

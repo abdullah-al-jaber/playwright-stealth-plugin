@@ -1,10 +1,10 @@
 {
-  "compilerOptions": {
-    "target": "es2022",
-    "module": "es2022",
-    "rootDir": "./playwright_stealth_plugin/_typescript",
-    "outDir": "./playwright_stealth_plugin/_javascript",
-    "sourceMap": false,
-    "declaration": false
-  }
+    "compilerOptions": {
+        "target": "es2022",
+        "module": "es2022",
+        "rootDir": "./playwright_stealth_plugin/_typescript",
+        "outDir": "./playwright_stealth_plugin/_javascript",
+        "sourceMap": false,
+        "declaration": false
+    }
 }
