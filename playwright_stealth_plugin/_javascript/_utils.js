@@ -17,4 +17,4 @@ const custom_Worker = (scriptURL, options) => {
 window.Worker = custom_Worker;
 window.worker_scripts = worker_scripts;
 console.log("Hello, World !");
-export {};
+// export {};
