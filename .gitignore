@@ -4,7 +4,3 @@
 
 # Python Cache Folders
 __pycache__/
-
-# Python Test Files
-test.py
-screenshot.png

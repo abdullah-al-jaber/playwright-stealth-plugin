@@ -14,7 +14,7 @@ browser_options: typing.Dict[str, typing.Any] = {
     "channel": "chrome",
 }
 context_options: typing.Dict[str, typing.Any] = {
-    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.37 Safari/537.36",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
     "viewport": {"width": 1280, "height": 720},
     "device_scale_factor": 1,
     "is_mobile": False,
