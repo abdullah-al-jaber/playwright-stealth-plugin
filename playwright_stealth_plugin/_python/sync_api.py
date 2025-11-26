@@ -22,30 +22,33 @@ def plugin_code(context_or_page: playwright.sync_api.Page | playwright.sync_api.
 
 
 def custom_new_page(self: playwright.sync_api.Browser | playwright.sync_api.BrowserContext, *args: typing.Any, **kwargs: typing.Any):
+    kwargs = {**context_options, **kwargs}
     page = original_new_page(self, *args, **kwargs)
     plugin_code(page)
     return page
 
 
 def custom_launch(self: playwright.sync_api.BrowserType, *args: typing.Any, **kwargs: typing.Any):
-    browser = original_launch(self, *args, **browser_options, **kwargs)
-    global original_new_context, original_new_page, original_new_browser_cdp_session
+    kwargs = {**browser_options, **kwargs}
+    browser = original_launch(self, *args, **kwargs)
+    global original_new_context, original_new_page
     original_new_context = type(browser).new_context
     original_new_page = type(browser).new_page
-    original_new_browser_cdp_session = type(browser).new_browser_cdp_session
     type(browser).new_page = custom_new_page
     type(browser).new_context = custom_new_context
     return browser
 
 
 def custom_new_context(self: playwright.sync_api.Browser, *args: typing.Any, **kwargs: typing.Any):
-    context = original_new_context(self, *args, **context_options, **kwargs)
+    kwargs = {**context_options, **kwargs}
+    context = original_new_context(self, *args, **kwargs)
     plugin_code(context)
     return context
 
 
 def custom_launch_persistent_context(self: playwright.sync_api.BrowserType, *args: typing.Any, **kwargs: typing.Any):
-    context = original_launch_persistent_context(self, *args, **browser_options, **context_options, **kwargs)
+    kwargs = {**browser_options, **context_options, **kwargs}
+    context = original_launch_persistent_context(self, *args, **kwargs)
     global original_new_page, original_new_cdp_session
     original_new_page = type(context).new_page
     original_new_cdp_session = type(context).new_cdp_session
