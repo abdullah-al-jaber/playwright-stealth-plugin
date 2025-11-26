@@ -9,11 +9,12 @@ _Easy to work - No need for extra documentation !_
 
 ## `Website Test`
 
-| Website                                                   | Difficulty | RESULT  |
-| --------------------------------------------------------- | :--------: | :-----: |
-| [SONNY SOFT](https://bot.sannysoft.com/)                  |    EASY    | **YES** |
-| [PIXEL SCAN](https://pixelscan.net/bot-check)             |   MEDIUM   | **NO**  |
-| [BROWSER SCAN](https://www.browserscan.net/bot-detection) |    HARD    | **YES** |
+| Website                                                         | Difficulty | RESULT  |
+| --------------------------------------------------------------- | :--------: | :-----: |
+| [SONNY SOFT](https://bot.sannysoft.com/)                        |    EASY    | **YES** |
+| [ARE YOU A BOT](https://deviceandbrowserinfo.com/are_you_a_bot) |   MEDIUM   | **YES** |
+| [BROWSER SCAN](https://www.browserscan.net/bot-detection)       |    HARD    | **YES** |
+| [PIXEL SCAN](https://pixelscan.net/bot-check)                   |    HARD    | **NO**  |
 
 You can do more test !
 
