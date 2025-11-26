@@ -14,4 +14,5 @@ const webgl = () => {
         prototype.getParameter = custom_getParameter;
     });
 };
+webgl();
 window.worker_scripts.push(`(${webgl.toString()})();`);
