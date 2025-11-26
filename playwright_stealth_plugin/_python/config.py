@@ -5,7 +5,7 @@ import typing
 sys.__file__ = os.path.abspath(os.path.join(__file__, ".."))
 
 script_folder = "_javascript"
-script_names: typing.List[str] = ["_utils.js", "webgl.js"]
+script_names: typing.List[str] = ["_utils.js", "cdp.js", "webgl.js"]
 
 browser_options: typing.Dict[str, typing.Any] = {
     "args": [
