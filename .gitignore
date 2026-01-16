@@ -1,6 +1,0 @@
-# Python Build Folders
-/dist/
-/*.egg-info/
-
-# Python Cache Folders
-__pycache__/
