@@ -19,5 +19,4 @@ context_options: typing.Dict[str, typing.Any] = {
     "device_scale_factor": 1,
     "is_mobile": False,
     "has_touch": False,
-    "default_browser_type": "chromium",
 }

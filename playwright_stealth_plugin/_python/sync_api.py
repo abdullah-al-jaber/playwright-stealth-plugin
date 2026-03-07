@@ -21,8 +21,14 @@ def plugin_code(context_or_page: playwright.sync_api.Page | playwright.sync_api.
         context_or_page.add_init_script(script_content)
 
 
-def custom_new_page(self: playwright.sync_api.Browser | playwright.sync_api.BrowserContext, *args: typing.Any, **kwargs: typing.Any):
+def custom_new_page_1(self: playwright.sync_api.Browser | playwright.sync_api.BrowserContext, *args: typing.Any, **kwargs: typing.Any):
     kwargs = {**context_options, **kwargs}
+    page = original_new_page(self, *args, **kwargs)
+    plugin_code(page)
+    return page
+
+
+def custom_new_page_2(self: playwright.sync_api.Browser | playwright.sync_api.BrowserContext, *args: typing.Any, **kwargs: typing.Any):
     page = original_new_page(self, *args, **kwargs)
     plugin_code(page)
     return page
@@ -34,7 +40,7 @@ def custom_launch(self: playwright.sync_api.BrowserType, *args: typing.Any, **kw
     global original_new_context, original_new_page
     original_new_context = type(browser).new_context
     original_new_page = type(browser).new_page
-    type(browser).new_page = custom_new_page
+    type(browser).new_page = custom_new_page_1
     type(browser).new_context = custom_new_context
     return browser
 
@@ -51,8 +57,7 @@ def custom_launch_persistent_context(self: playwright.sync_api.BrowserType, *arg
     context = original_launch_persistent_context(self, *args, **kwargs)
     global original_new_page, original_new_cdp_session
     original_new_page = type(context).new_page
-    original_new_cdp_session = type(context).new_cdp_session
-    type(context).new_page = custom_new_page
+    type(context).new_page = custom_new_page_2
     return context
 
 
