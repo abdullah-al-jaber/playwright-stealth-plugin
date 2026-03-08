@@ -3,7 +3,8 @@ const sync_fetch = (url) => {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", url, false);
     xhr.send();
-    if (xhr.status !== 200) throw new Error("Response isn't valid !");
+    if (xhr.status !== 200)
+        throw new Error("Response isn't valid !");
     return xhr.responseText;
 };
 const original_Worker = window.Worker;
@@ -15,5 +16,5 @@ const custom_Worker = (scriptURL, options) => {
 };
 window.Worker = custom_Worker;
 window.worker_scripts = worker_scripts;
-console.log("Hello, World !");
+console.log("PLAYWRIGHT_STEALTH_PLUGIN: START !");
 export {};

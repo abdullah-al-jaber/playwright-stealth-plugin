@@ -5,7 +5,7 @@ const cdp = () => {
         value: 0,
     });
     Object.defineProperty(Error, "prepareStackTrace", {
-        value: () => {},
+        value: () => { },
     });
 };
 cdp();

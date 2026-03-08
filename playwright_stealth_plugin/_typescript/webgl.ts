@@ -15,3 +15,4 @@ const webgl = () => {
 
 webgl();
 window.worker_scripts.push(`(${webgl.toString()})();`);
+console.log("PLAYWRIGHT_STEALTH_PLUGIN: FINISH !");

@@ -25,4 +25,4 @@ declare global {
 export {};
 
 window.worker_scripts = worker_scripts;
-console.log("Hello, World !");
+console.log("PLAYWRIGHT_STEALTH_PLUGIN: START !");
