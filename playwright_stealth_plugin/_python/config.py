@@ -1,0 +1,22 @@
+import os
+import sys
+import typing
+
+sys.__file__ = os.path.abspath(os.path.join(__file__, ".."))
+
+script_folder = "_javascript"
+script_names: typing.List[str] = ["_utils.js", "cdp.js", "webgl.js"]
+
+browser_options: typing.Dict[str, typing.Any] = {
+    "args": [
+        "--disable-blink-features=AutomationControlled",
+    ],
+    "channel": "chrome",
+}
+context_options: typing.Dict[str, typing.Any] = {
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+    "viewport": {"width": 1280, "height": 720},
+    "device_scale_factor": 1,
+    "is_mobile": False,
+    "has_touch": False,
+}
